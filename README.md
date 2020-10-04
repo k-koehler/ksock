@@ -17,6 +17,7 @@ configure({ hostname: "localhost", port: 1337 })
 const helloEvent = new Event("hello");
 helloEvent.subscribe((payload: string) => {
   console.log(payload);
+});
 helloEvent.publish("hello world");
 ```
 
