@@ -35,3 +35,15 @@ event.subscribe((order: Order) => {
 });
 ```
 
+## messages
+
+```typescript
+import { talk, listen } from 'ksock-client';
+const bob = new User("bob");
+talk("hello").to(bob.id);
+listen(bob.id, message => {
+  console.log(message);
+});
+```
+
+
