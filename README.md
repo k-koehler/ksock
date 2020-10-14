@@ -11,7 +11,7 @@ npx ksock-server --serve 8080
 
 *client*
 ```typescript
-import { Event, configure } from 'ksock-client';
+import { Event, configure } from 'ksock/client';
 configure({ hostname: "localhost", port: 1337 })
 
 const helloEvent = new Event("hello");
