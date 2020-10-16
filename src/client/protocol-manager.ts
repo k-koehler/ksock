@@ -1,5 +1,6 @@
 import Sock from "../lib/sock";
-import Subscription from "./subscription";
+import Emission from "./intermediate/emission";
+import Subscription from "./intermediate/subscription";
 
 export default class ProtocolManager {
   private sock: Sock;
@@ -20,7 +21,9 @@ export default class ProtocolManager {
     await this.sock.sendRaw(subscription.protocolMessage());
   }
 
-  public emit(emission: Emi) {}
+  public async emit(emission: Emission) {
+    await this.sock.sendRaw(emission.protocolMessage());
+  }
 
   public async bye() {
     await this.sock.sendRaw("BYE");

@@ -5,9 +5,11 @@ export default class Sock {
   public connected: boolean;
   public hasError: boolean;
 
-  constructor(url: string) {
+  constructor(ws: WebSocket);
+  constructor(url: string);
+  constructor(wsOrUrl: WebSocket | string) {
     this.connected = this.hasError = false;
-    this.ws = new WebSocket(url);
+    this.ws = typeof wsOrUrl === "string" ? new WebSocket(wsOrUrl) : wsOrUrl;
     this.ws.onopen = () => (this.connected = true);
     this.ws.onerror = () => (this.hasError = true);
   }

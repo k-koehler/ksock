@@ -1,11 +1,12 @@
-import Channel from "./channel";
+import Channel from "../channel";
+import { ProtocolIntermediate } from "./common";
 
 export interface SubscriptionParams {
   channel?: Channel;
   topic: string;
 }
 
-export default class Subscription {
+export default class Subscription implements ProtocolIntermediate {
   private topic!: string;
   private channel?: Channel;
 
