@@ -11,7 +11,7 @@ npx ksock-server --serve 8080
 
 *client*
 ```typescript
-import { Event, configure } from 'ksock-client';
+import { Event, configure } from 'ksock/client';
 configure({ hostname: "localhost", port: 1337 })
 
 const helloEvent = new Event("hello");
@@ -38,7 +38,7 @@ event.subscribe((order: Order) => {
 ## messages
 
 ```typescript
-import { talk, listen } from 'ksock-client';
+import { talk, listen } from 'ksock/client';
 const bob = new User("bob");
 talk("hello").to(bob.id);
 listen(bob.id, message => {
