@@ -1,4 +1,4 @@
-import Sock from "../lib/sock";
+import Sock from "./sock";
 import Channel from "./channel";
 import Emission from "./intermediate/emission";
 import Subscription from "./intermediate/subscription";
@@ -8,6 +8,7 @@ export default class Event {
   private url: string;
   private protocolManager?: ProtocolManager;
   private hasInitialized = false;
+  private topic: string;
 
   private async useProtocolManager() {
     this.protocolManager ||= new ProtocolManager(
@@ -34,17 +35,30 @@ export default class Event {
     this.hasInitialized = true;
   }
 
-  public constructor(url: string) {
+  public constructor(url: string, topic: string) {
     this.url = url;
+    this.topic = topic;
   }
 
-  public async subscribe(topic: string, channel?: Channel) {
+  public async subscribe(cb: (data: any) => void): Promise<void>;
+  public async subscribe(
+    channel: Channel,
+    cb: (data: any) => void
+  ): Promise<void>;
+  public async subscribe(
+    channelOrCb: ((data: any) => void) | Channel,
+    cb?: (data: any) => void
+  ) {
+    const topic = this.topic;
+    const channel = channelOrCb instanceof Channel ? channelOrCb : undefined;
+    const callback = (channelOrCb instanceof Function ? channelOrCb : cb)!;
     (await this.useProtocolManager()).subscribe(
-      new Subscription({ topic, channel })
+      new Subscription({ topic, channel, callback })
     );
   }
 
-  public async emit(topic: string, channel?: Channel) {
+  public async emit(channel?: Channel) {
+    const topic = this.topic;
     return (await this.useProtocolManager()).emit(
       new Emission({ topic, channel })
     );

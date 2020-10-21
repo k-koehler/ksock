@@ -1,4 +1,4 @@
-import Sock from "../lib/sock";
+import Sock from "./sock";
 import Emission from "./intermediate/emission";
 import Subscription from "./intermediate/subscription";
 

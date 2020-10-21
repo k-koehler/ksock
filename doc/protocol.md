@@ -1,7 +1,7 @@
 # Protocol
 
 1. Connect
-   - Send "HELLO", server adds you as a client.
+   - Connecting to the server adds you as a client
 2. Keep alive
    - Server will kill your connection in (default) 1 minute without a "KEEP_ALIVE" signal being sent.
 3. Subscribe

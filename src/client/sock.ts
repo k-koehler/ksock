@@ -5,11 +5,9 @@ export default class Sock {
   public connected: boolean;
   public hasError: boolean;
 
-  constructor(ws: WebSocket);
-  constructor(url: string);
-  constructor(wsOrUrl: WebSocket | string) {
+  constructor(url: string) {
     this.connected = this.hasError = false;
-    this.ws = typeof wsOrUrl === "string" ? new WebSocket(wsOrUrl) : wsOrUrl;
+    this.ws = new WebSocket(url);
     this.ws.onopen = () => (this.connected = true);
     this.ws.onerror = () => (this.hasError = true);
   }
@@ -50,5 +48,9 @@ export default class Sock {
     return new Promise<void>((resolve, reject) =>
       this.ws.send(rawData, (error) => (error ? reject(error) : resolve()))
     );
+  }
+
+  public listen(cb: (data: any) => void) {
+    this.ws.on("message", (data) => cb(data.toString()));
   }
 }

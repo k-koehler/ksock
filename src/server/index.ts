@@ -1,14 +1,15 @@
 import WebSocket from "ws";
-
-const pool = new Map<number, WebSocket>();
+import ConnectionPool from "./connection-pool";
+import ConnectionPoolManager from "./connection-pool-manager";
 
 async function main() {
-  let id = 0;
   const ws = new WebSocket.Server({ port: 1337 });
+  const connectionPool = new ConnectionPool();
+  const connectionPoolManager = new ConnectionPoolManager(connectionPool);
   ws.on("connection", (ws) => {
-    pool.set(id++, ws);
-    console.log(pool);
+    connectionPool.acceptConnection(ws);
   });
+  await connectionPoolManager.manage();
 }
 
 main();

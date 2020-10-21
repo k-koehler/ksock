@@ -15,6 +15,6 @@ export default class Emission implements ProtocolIntermediate {
   }
 
   public protocolMessage(): string {
-    return `EMIT ${this.topic}${this.channel ? `:${this.channel.name}` : ""})`;
+    return `EMIT ${this.topic}${this.channel ? `:${this.channel.name}` : ""}`;
   }
 }
