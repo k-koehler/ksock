@@ -4,15 +4,17 @@ Real-time events are complicated to setup. `ksock` provides a simple server and 
 
 # example
 
-*server*
+_server_
+
 ```bash
 npx ksock-server --serve 8080
 ```
 
-*client*
+_client_
+
 ```typescript
-import { Event, configure } from 'ksock/client';
-configure({ hostname: "localhost", port: 1337 })
+import { Event, configure } from "ksock/client";
+configure({ hostname: "localhost", port: 1337 });
 
 const helloEvent = new Event("hello");
 helloEvent.subscribe((payload: string) => {
@@ -34,16 +36,3 @@ event.subscribe((order: Order) => {
   processOrder(order);
 });
 ```
-
-## messages
-
-```typescript
-import { talk, listen } from 'ksock/client';
-const bob = new User("bob");
-talk("hello").to(bob.id);
-listen(bob.id, message => {
-  console.log(message);
-});
-```
-
-

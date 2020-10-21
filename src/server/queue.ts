@@ -1,12 +1,11 @@
 export default class Queue<T> {
-  private arr: T[] = [];
+  private wrappedArray: T[] = [];
 
   public enqueue(t: T) {
-    this.arr.push(t);
-    return this;
+    this.wrappedArray.push(t);
   }
 
   public dequeue() {
-    return this.arr.shift();
+    return this.wrappedArray.shift();
   }
 }

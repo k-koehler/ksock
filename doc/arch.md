@@ -107,3 +107,63 @@ handleKeepAlive(){
   this.lease.renew();
 }
 ```
+
+## Subscribe
+
+### Client
+
+The client tells the server that they are interested in a _topic_.
+
+```
+const helloEvent = new Event("hello");
+helloEvent.subscribe(() => console.log("hello event ocurred"))
+```
+
+### Server
+
+As with all events, the connection receives a new message, in this case "SUBSCRIBE", and put it in its queue. Subscription is more interesting than keep alive because the message also decodes some meta information, namely the channel.
+
+```
+class SubscribeMessage {
+  public topic: string;
+  public channel?: string;
+}
+
+// later
+
+handleRawMessage(rawMessage: string){
+  const message: Message = decodeMessage(rawMessage);
+  if(message.type === MessageType.Subscribe){
+    return handleSubscribe(message as SubscribeMessage);
+  }
+}
+
+handleSubscribe(subscribeMessage: SubscribeMessage){
+  doSomethingWithTopicAndChannel(
+    subscribeMessage.topic,
+    subscribeMessage.channel
+  )
+}
+```
+
+In _ksock_, we use node's event emitter API to efficiently subscribe to emit events.
+
+```
+messageEmitter.on(
+  encodeTopicAndChannel(topic, channel),
+  rawMessage => forwardToClient(rawMessage)
+);
+```
+
+### Client (Again)
+
+Clients only ever receive forwarded events from the server. They decode them, and then pass the decoded data into the subscription callback.
+
+```
+ws.onmessage = forwardedRawEmitMessage => {
+  const data = decodeRawEmitMessage(forwardedRawEmitMessage);
+  delegateToSubscriptionCallback(data);
+}
+```
+
+## Emit

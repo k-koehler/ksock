@@ -4,7 +4,8 @@
   "description": "real-time js events easy",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,10 @@
     "ws": "^7.3.1"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/ws": "^7.2.7",
     "jest": "^26.5.2",
+    "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
   }
 }

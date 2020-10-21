@@ -1,12 +1,14 @@
 # Protocol
 
+TODO base64 encode topic
+
 1. Connect
    - Connecting to the server adds you as a client
 2. Keep alive
    - Server will kill your connection in (default) 1 minute without a "KEEP_ALIVE" signal being sent.
 3. Subscribe
-   - Subscribe to an event "EVENT_NAME", any events emitted to "EVENT_NAME" will be pushed to you, the client. Here the client would send "SUBSCRIBE EVENT_NAME".
-   - Subscribe to an event in a channel "EVENT_NAME:\<base64-encoded channel id\>". Here the client would send "SUBSCRIBE EVENT_NAME:\<base64-encoded channel id\>".
+   - Subscribe to an event "EVENT_NAME", any events emitted to the topic "EVENT_NAME" will be pushed to you, the client. Here the client would send "SUBSCRIBE EVENT_NAME".
+   - Subscribe to an event in a channel "\<base64-encoded topic\>:\<base64-encoded channel id\>". Here the client would send "SUBSCRIBE EVENT_NAME:\<base64-encoded channel id\>".
    - Subscribe to an event in a secure channel: "EVENT_NAME:\<encyphered channel id\>". Here the client would send "SUBSCRIBE EVENT_NAME:\<encyphered channel id\>".
 4. Unsubscribe
    - Same as Subscribe except send the signal "UNSUBSCRIBE"
